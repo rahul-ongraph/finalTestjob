@@ -4,32 +4,7 @@ import ButtonComponent from "./../../component/Button/Button";
 import "./../Signup/Signup.css";
 import { Typography, Form } from "antd";
 import { useHistory } from "react-router-dom";
-const Field = [
-  {
-    placeholder: "Please Enter your name",
-    label: "Full Name",
-    value: "name",
-    text: "name",
-  },
-  {
-    placeholder: "Please Enter your name",
-    label: "Full Name",
-    value: "name",
-    text: "name",
-  },
-  {
-    placeholder: "Please Enter your name",
-    label: "Full Name",
-    value: "name",
-    text: "name",
-  },
-  {
-    placeholder: "Please Enter your name",
-    label: "Full Name",
-    value: "name",
-    text: "name",
-  },
-];
+
 function SignUp(props) {
   const { Title } = Typography;
   const history = useHistory();
@@ -51,10 +26,11 @@ function SignUp(props) {
     password: "",
   });
   const onChangeValue = (e, text) => {
-    setState({ [text]: e.target.value });
+    setState({...state,[text]: e.target.value });
+    validation();
   };
 
-    const  onSubmit = () => {
+   const validation = () => {
     let error = {};
     if(!state.name){
       error.name="Name is required";
@@ -83,36 +59,32 @@ function SignUp(props) {
       error.password = "Invalid password";
     }
     setError(error)
-
-  }
-
-
-
-  // const onSubmit = (e) => {
-  //   console.log("aaaaaaaa", e);
-  //   let registration = {
-  //     name: name,
-  //     email: email,
-  //     State: State,
-  //     district: district,
-  //     area: area,
-  //     password: password,
-  //   };
-  //   let olddata = localStorage.getItem("registration");
-  //   if (olddata == null) {
-  //     olddata = [];
-  //     olddata.push(registration);
-  //     localStorage.setItem("userData", JSON.stringify(olddata));
-  //     console.log("Data saved", olddata);
-  //   } else {
-  //     let oldArr = JSON.parse(olddata);
-  //     oldArr.push(registration);
-  //     localStorage.setItem("userData", JSON.stringify(oldArr));
-  //     console.log(oldArr, "hhg");
-  //   }
-  // };
-  
-
+   }
+  const  onSubmit = (e) => {
+    console.log("aaaaaaaa", e);
+    let registration = {
+      name: name,
+      email: email,
+      State: State,
+      district: district,
+      area: area,
+      password: password,
+    };
+    let olddata =  localStorage.getItem("registration");
+    if (olddata == null) {
+      olddata = [];
+      olddata.push(registration);
+      localStorage.setItem("registration", JSON.stringify(olddata));
+      console.log("Data saved", olddata);
+      history.push('/login')
+    } else {
+      let oldArr = JSON.parse(olddata);
+      oldArr.push(registration);
+      localStorage.setItem("registration", JSON.stringify(oldArr));
+      console.log(oldArr, "hhg");
+     
+    }
+  };
   const { name, email, State, district, area, password} = state;
   return (
     <div className="main">
@@ -121,7 +93,7 @@ function SignUp(props) {
           <ButtonComponent
             className="default_btn"
             Button="Login"
-            onClick={() => history.push("/")}
+            onClick={() => history.push("/login")}
           />
         </div>
         <div style={{ marginTop: 30 }}></div>
@@ -129,17 +101,6 @@ function SignUp(props) {
           Registration
         </Title>
         <Form  className="form">
-          {/* {
-            Field.map((item)=>{
-              return(<InputField
-                type={item.label}
-                placeholder={item.placeholder}
-                label={item.label}
-                value={State[item.value]}
-               onClick={(e)=>onChangeValue(e,`${item.text}`)}
-              /> )
-            })
-          } */}
           <InputField
             placeholder="Please Enter your Name"
             label="Full Name"
