@@ -1,6 +1,11 @@
 @import 'antd/dist/antd.css';
-body {
-}
 .main {
-   
+    background-color: white;
+}
+.header {
+  width:100%;
+  background-color:red;
+}
+.sider {
+  
 }

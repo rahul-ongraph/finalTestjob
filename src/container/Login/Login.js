@@ -7,7 +7,6 @@ import { useHistory } from "react-router-dom";
 function Login(props) {
   const history = useHistory();
   const { Title } = Typography;
-
   const [state, setState] = useState({
     email: "",
     password: "",
@@ -17,7 +16,7 @@ function Login(props) {
     password: "",
   });
 
-  const onChangeValue = (e, target) => {
+  const handleChange = (e, target) => {
     setState({ [target]: e.target.value });
   };
   const onSubmit = () => {
@@ -57,7 +56,7 @@ function Login(props) {
             placeholder="Please Enter your Email"
             label="Email"
             value={email}
-            onClick={(e) => onChangeValue(e, "email")}
+            onChange={(e) => handleChange(e, "email")}
           />
           {error.email && (
             <div style={{ color: "red" }}>
@@ -71,7 +70,7 @@ function Login(props) {
               placeholder="Please Enter your password"
               label="Password"
               value={password}
-              onClick={(e) => onChangeValue(e, "password")}
+              onChange={(e) => handleChange(e, "password")}
             />
             {error.password && (
               <div style={{ color: "red" }}>
@@ -79,7 +78,7 @@ function Login(props) {
               </div>
             )}
           </div>
-          <Checkbox  className="checkBox">Remember me</Checkbox>
+          <Checkbox className="checkBox">Remember me</Checkbox>
           <ButtonComponent
             onClick={onSubmit}
             Button="Login"

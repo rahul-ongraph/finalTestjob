@@ -1,10 +1,18 @@
 import React from "react";
-import '../Product/Product.css'
+import "../Product/Product.css";
+import { Layout } from "antd";
 function Product() {
-return(
-    <div className="main" >
-    <p>Hello</p>
-    </div>
-)
+  const { Header, Footer, Sider, Content } = Layout;
+  return (
+    <>
+      <Header className="header">
+        <p>Hello</p>
+      </Header>
+      <Layout className="main">
+        <Sider className="sider">Sider</Sider>
+        <Content>Content</Content>
+      </Layout>
+    </>
+  );
 }
-export default Product; 
+export default Product;

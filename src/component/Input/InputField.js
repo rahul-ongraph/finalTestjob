@@ -3,20 +3,19 @@ import { Input } from "antd";
 import "../Input/InputField.css";
 
 const InputField = (props) => {
-  const { type, placeholder, value, onClick } = props;
+  const { type, placeholder, value, onChange } = props;
   return (
-    <div  className="input_bottom">
+    <div className="input_bottom">
       <label>
         {props.label}
         <strong style={{ color: "red" }}> *</strong>
       </label>
-
       <Input
         className="input"
         type={type}
         value={value}
         placeholder={placeholder}
-        onChange={onClick}
+        onChange={onChange}
         required
       />
     </div>
