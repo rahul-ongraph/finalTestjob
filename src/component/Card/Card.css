@@ -1,0 +1,6 @@
+@import 'antd/dist/antd.css';
+
+.productname {
+    color:#21afb8;
+    text-align: center;
+}

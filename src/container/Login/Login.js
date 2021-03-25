@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import InputField from "../../component/Input/InputField";
 import ButtonComponent from "./../../component/Button/Button";
 import "./../Login/Login.css";
@@ -10,16 +10,18 @@ function Login(props) {
   const [state, setState] = useState({
     email: "",
     password: "",
+    checked: false,
   });
   const [error, setError] = useState({
     email: "",
     password: "",
   });
 
-  const handleChange = (e, target) => {
-    setState({ [target]: e.target.value });
+  const onChangeValue = (e, target) => {
+    setState({ ...state, [target]: e.target.value });
+    validation();
   };
-  const onSubmit = () => {
+  const validation = () => {
     let error = {};
     if (!state.email) {
       error.email = "Email is required";
@@ -34,6 +36,40 @@ function Login(props) {
       error.password = "Invalid password";
     }
     setError(error);
+  };
+
+  const onSubmit = () => {
+    if (validation()) {
+      console.log("checked => ", state.checked);
+      localStorage.setItem("Remember", state.checked === true ? "1" : "0");
+      localStorage.setItem(
+        "loggedInUser",
+        JSON.stringify({ email: state.email, password: state.password })
+      );
+      console.log("ppppppppppppp", state.email, state.password);
+      history.push("/Product");
+    }
+  };
+  useEffect(() => {
+    let remember = Boolean(+localStorage.getItem("Remember"));
+    console.log("remember => ", remember);
+    if (remember) {
+      let loggedInUser = localStorage.getItem("loggedInUser");
+      if (loggedInUser !== null || loggedInUser !== undefined) {
+        let user = JSON.parse(loggedInUser);
+        setState({
+          ...state,
+          email: user.email,
+          password: user.password,
+          checked: remember,
+        });
+      }
+    }
+  }, []);
+
+  const onCheck = () => {
+    //console.log('checked => ', state.checked)
+    setState({ ...state, checked: !state.checked });
   };
 
   const { email, password } = state;
@@ -56,21 +92,20 @@ function Login(props) {
             placeholder="Please Enter your Email"
             label="Email"
             value={email}
-            onChange={(e) => handleChange(e, "email")}
+            onChange={(e) => onChangeValue(e, "email")}
           />
           {error.email && (
             <div style={{ color: "red" }}>
               <label>{error.email}</label>
             </div>
           )}
-          <div style={{ marginTop: 10 }}></div>
           <div>
             <InputField
               type="password"
               placeholder="Please Enter your password"
               label="Password"
               value={password}
-              onChange={(e) => handleChange(e, "password")}
+              onChange={(e) => onChangeValue(e, "password")}
             />
             {error.password && (
               <div style={{ color: "red" }}>
@@ -78,9 +113,15 @@ function Login(props) {
               </div>
             )}
           </div>
-          <Checkbox className="checkBox">Remember me</Checkbox>
+          <Checkbox
+            checked={state.checked}
+            onClick={() => onCheck()}
+            className="checkBox"
+          >
+            Remember me
+          </Checkbox>
           <ButtonComponent
-            onClick={onSubmit}
+            onClick={() => onSubmit()}
             Button="Login"
             className="yellow_btn"
           />

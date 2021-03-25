@@ -24,12 +24,12 @@ function SignUp(props) {
     area: "",
     password: "",
   });
-  const handleChange = (e, text) => {
-    setState({ ...state, [text]: e.target.value });
+  const onChangeValue = (e, text) => {
+    setState({...state,[text]: e.target.value });
     validation();
   };
 
-  const validation = () => {
+   const validation = () => {
     let error = {};
     if (!state.name) {
       error.name = "Name is required";
@@ -57,42 +57,34 @@ function SignUp(props) {
     ) {
       error.password = "Invalid password";
     }
-    setError(error);
-  };
-
-  const onSubmit = () => {
-    if (state.email != "") {
-
+    setError(error)
+   }
+  const  onSubmit = (e) => {
+    validation();
+    console.log("aaaaaaaa", e);
+    let registration = {
+      name: name,
+      email: email,
+      State: State,
+      district: district,
+      area: area,
+      password: password,
+    };
+    let olddata =  localStorage.getItem("registration");
+    if (olddata == null) {
+      olddata = [];
+      olddata.push(registration);
+      localStorage.setItem("registration", JSON.stringify(olddata));
+      console.log("Data saved", olddata);
+      history.push('/')
     } else {
-      alert("hiii");
+      // let oldArr = JSON.parse(olddata);
+      // oldArr.push(registration);
+      // localStorage.setItem("registration", JSON.stringify(oldArr));
+      // console.log(oldArr, "hhg");  
     }
   };
-
-  // const onSubmit = (e) => {
-  //   console.log("aaaaaaaa", e);
-  //   let registration = {
-  //     name: name,
-  //     email: email,
-  //     State: State,
-  //     district: district,
-  //     area: area,
-  //     password: password,
-  //   };
-  //   let olddata = localStorage.getItem("registration");
-  //   if (olddata == null) {
-  //     olddata = [];
-  //     olddata.push(registration);
-  //     localStorage.setItem("userData", JSON.stringify(olddata));
-  //     console.log("Data saved", olddata);
-  //   } else {
-  //     let oldArr = JSON.parse(olddata);
-  //     oldArr.push(registration);
-  //     localStorage.setItem("userData", JSON.stringify(oldArr));
-  //     console.log(oldArr, "hhg");
-  //   }
-  // };
-
-  const { name, email, State, district, area, password } = state;
+  const { name, email, State, district, area, password} = state;
   return (
     <div className="main">
       <div className="signUpBox">
@@ -107,12 +99,12 @@ function SignUp(props) {
         <Title className="registration" level={3}>
           Registration
         </Title>
-        <Form className="form">
+        <Form  className="form">
           <InputField
             placeholder="Please Enter your Name"
             label="Full Name"
             value={name}
-            onClick={(e) => handleChange(e, "name")}
+            onChange={(e) => onChangeValue(e, "name")}
           />
           {error.name && (
             <div style={{ color: "red" }}>
@@ -124,7 +116,7 @@ function SignUp(props) {
             placeholder="Please Enter your Email"
             label="Email"
             value={email}
-            onClick={(e) => handleChange(e, "email")}
+            onChange={(e) => onChangeValue(e, "email")}
           />
           {error.email && (
             <div style={{ color: "red" }}>
@@ -135,7 +127,7 @@ function SignUp(props) {
             placeholder="Please Enter your State"
             label="State"
             value={State}
-            onClick={(e) => handleChange(e, "State")}
+            onChange={(e) => onChangeValue(e, "State")}
           />
           {error.State && (
             <div style={{ color: "red" }}>
@@ -146,7 +138,7 @@ function SignUp(props) {
             placeholder="Please Enter your District"
             label="District"
             value={district}
-            onClick={(e) => handleChange(e, "district")}
+            onChange={(e) => onChangeValue(e, "district")}
           />
           {error.district && (
             <div style={{ color: "red" }}>
@@ -157,7 +149,7 @@ function SignUp(props) {
             placeholder="Please Enter your Area"
             label="Area"
             value={area}
-            onChange={(e) => handleChange(e, "area")}
+            onChange={(e) => onChangeValue(e, "area")}
           />
           {error.area && (
             <div style={{ color: "red" }}>
@@ -169,7 +161,7 @@ function SignUp(props) {
             placeholder="Please Enter your password"
             label="Password"
             value={password}
-            onChange={(e) => handleChange(e, "password")}
+            onChange={(e) => onChangeValue(e, "password")}
           />
           {error.password && (
             <div style={{ color: "red" }}>
@@ -179,7 +171,7 @@ function SignUp(props) {
           <ButtonComponent
             Button="Sign up"
             className="yellow_btn"
-            onClick={onSubmit}
+            onClick={()=>onSubmit()}
           />
         </Form>
       </div>
