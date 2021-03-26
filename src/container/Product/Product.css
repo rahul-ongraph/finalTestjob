@@ -17,7 +17,6 @@
 }
 .menu_icon {
   font-size: 20px;
-  background-color: white;
   margin: 20px 30px;
   width: 20px;
 }
@@ -30,7 +29,7 @@
 }
 .sidebar {
   display: flex;
-  height: 600px;
+  height: 100%;
 }
 .ant-layout-sider {
   background-color: #cbd6ce;
@@ -67,24 +66,13 @@
   display: flex;
   flex-wrap: wrap;
 }
-.card1 {
+/* .card1 {
   background-color: red;
   width:30%;
-  height: 300px;
-  margin:10px
-}
-.card2 {
-  background-color: green;
-  width:30%;
-  height: 300px;
-  margin:10px
-}
-.card3 {
-  background-color: pink;
-  width:30%;
-  height: 300px;
- margin:10px
-}
+  height: 350px;
+  margin:10px;
+  border-radius: 15px;
+} */
 .carsoulproduct {
   height: 160px;
   line-height: 180px;
