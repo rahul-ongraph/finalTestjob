@@ -65,6 +65,7 @@
 .ContentCard {
   display: flex;
   flex-wrap: wrap;
+  border-width: 2px;
 }
 /* .card1 {
   background-color: red;

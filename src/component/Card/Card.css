@@ -15,8 +15,8 @@ font-size: 20px;
     width:30%;
     margin:10px;
     border-radius:15px;
+    border-width: 5px;
   }
-
 .description {
   margin:0 auto;
   width:90% ;
