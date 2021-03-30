@@ -6,22 +6,22 @@ import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
 function App() {
   return (
 
-    <Product />
-    // <Router>
-    //   <div>
-    //     <Switch>
-    //       <Route exact path="/">
-    //         <Login />
-    //       </Route>
-    //       <Route path="/SignUp">
-    //         <SignUp />
-    //       </Route>
-    //       <Route path="/Product">
-    //         <Product />
-    //       </Route>
-    //     </Switch>
-    //   </div>
-    // </Router>
+    // <Product />
+    <Router>
+      <div>
+        <Switch>
+          <Route exact path="/login">
+            <Login />
+          </Route>
+          <Route path="/SignUp">
+            <SignUp />
+          </Route>
+          <Route path="/Product">
+            <Product />
+          </Route>
+        </Switch>
+      </div>
+    </Router>
   );
 }
 export default App;

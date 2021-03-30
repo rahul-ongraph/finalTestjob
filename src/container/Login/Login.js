@@ -34,12 +34,14 @@ function Login(props) {
       !/((?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]){6,12})/.test(state.password)
     ) {
       error.password = "Invalid password";
+    }else{
+      return true
     }
     setError(error);
   };
-
+  
   const onSubmit = () => {
-    if (validation()) {
+    // if (validation()) {
       console.log("checked => ", state.checked);
       localStorage.setItem("Remember", state.checked === true ? "1" : "0");
       localStorage.setItem(
@@ -48,7 +50,7 @@ function Login(props) {
       );
       console.log("ppppppppppppp", state.email, state.password);
       history.push("/Product");
-    }
+    // }
   };
   useEffect(() => {
     let remember = Boolean(+localStorage.getItem("Remember"));
@@ -74,7 +76,7 @@ function Login(props) {
 
   const { email, password } = state;
   return (
-    <div className="main">
+    <div className="main_class">
       <div className="loginBox">
         <div>
           <ButtonComponent

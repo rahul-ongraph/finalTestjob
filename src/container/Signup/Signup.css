@@ -3,6 +3,10 @@
   background-color: #403931;
 } */
 .main {
+  background-color: white; 
+  padding: 0px; 
+}
+.main_class{
   height: 100%;
   margin: 0 auto;
   background-color: #403931;

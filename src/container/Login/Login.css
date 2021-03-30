@@ -1,7 +1,11 @@
 @import "antd/dist/antd.css";
-/* body {
+body {
   background-color: #403931;
-} */
+}
+.main {
+  background-color: white; 
+  padding: 0px; 
+}
 .main {
   height: 100%;
   margin: 0 auto;

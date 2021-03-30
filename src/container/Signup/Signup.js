@@ -25,11 +25,11 @@ function SignUp(props) {
     password: "",
   });
   const onChangeValue = (e, text) => {
-    setState({...state,[text]: e.target.value });
+    setState({ ...state, [text]: e.target.value });
     validation();
   };
 
-   const validation = () => {
+  const validation = () => {
     let error = {};
     if (!state.name) {
       error.name = "Name is required";
@@ -58,48 +58,78 @@ function SignUp(props) {
       error.password = "Invalid password";
     }
     setError(error)
-   }
-  const  onSubmit = (e) => {
-    validation();
-    console.log("aaaaaaaa", e);
-    let registration = {
-      name: name,
-      email: email,
-      State: State,
-      district: district,
-      area: area,
-      password: password,
-    };
-    let olddata =  localStorage.getItem("registration");
-    if (olddata == null) {
-      olddata = [];
-      olddata.push(registration);
-      localStorage.setItem("registration", JSON.stringify(olddata));
-      console.log("Data saved", olddata);
-      history.push('/')
+  }
+  const onSubmit = () => {
+    if (name != '') {
+      if (email != '') {
+        if (State != '') {
+          if (district != '') {
+            if (area != '') {
+              if (password != '') {
+                let registration = {
+                  name: name,
+                  email: email,
+                  State: State,
+                  district: district,
+                  area: area,
+                  password: password,
+                };
+                let olddata = localStorage.getItem("registration");
+                if (olddata == null) {
+                  olddata = [];
+                  olddata.push(registration);
+                  localStorage.setItem("registration", JSON.stringify(olddata));
+                  console.log("Data saved", olddata);
+                  history.push('/login')
+                } else {
+                  let oldArr = JSON.parse(olddata);
+                  oldArr.push(registration);
+                  localStorage.setItem("registration", JSON.stringify(oldArr));
+                  console.log("OldArr else => ",oldArr );
+                  history.push('/login')
+                }
+
+              }
+              else {
+                alert("please input Password")
+              }
+            }
+            else {
+              alert("please input area")
+            }
+          }
+          else {
+            alert("please input district")
+          }
+        }
+        else {
+          alert("please input state")
+        }
+      }
+      else {
+        alert("please input email")
+      }
     } else {
-      // let oldArr = JSON.parse(olddata);
-      // oldArr.push(registration);
-      // localStorage.setItem("registration", JSON.stringify(oldArr));
-      // console.log(oldArr, "hhg");  
+      alert("please input name")
     }
+
   };
-  const { name, email, State, district, area, password} = state;
+  const { name, email, State, district, area, password } = state;
   return (
-    <div className="main">
+    <div className="main_class">
       <div className="signUpBox">
         <div>
           <ButtonComponent
             className="default_btn"
             Button="Login"
-            onClick={() => history.push("/")}
+            onClick={() => history.push("/login")}
           />
         </div>
         <div style={{ marginTop: 30 }}></div>
         <Title className="registration" level={3}>
           Registration
         </Title>
-        <Form  className="form">
+        <Form onClick={validation} className="form">
           <InputField
             placeholder="Please Enter your Name"
             label="Full Name"
@@ -171,7 +201,7 @@ function SignUp(props) {
           <ButtonComponent
             Button="Sign up"
             className="yellow_btn"
-            onClick={()=>onSubmit()}
+            onClick={() => onSubmit()}
           />
         </Form>
       </div>

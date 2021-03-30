@@ -11,8 +11,8 @@ const InputField = (props) => {
         <strong style={{ color: "red" }}> *</strong>
       </label>
       <Input
-        className="input"
-        type={type}
+        className=".input_Field" 
+         type={type}
         value={value}
         placeholder={placeholder}
         onChange={onChange}

@@ -8,7 +8,7 @@ const Card = ({ item1 }) => {
   return (<>
       {item1.map((y) => {
         return (
-          <div className="card">
+          <div style={{borderWidth:2,borderColor:"black"}} className="card">
             <Carousel autoplay>
               {y.image.map((x) => {
                 return (

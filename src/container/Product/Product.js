@@ -12,6 +12,7 @@ import {
   ShoppingCartOutlined,
   BellOutlined,
   UserOutlined,
+  LoginOutlined
 } from "@ant-design/icons";
 
 const item4 = [
@@ -288,9 +289,11 @@ function Product(props) {
               onChange={(event) => searchFilter(event)}
             />
           </Input.Group>
-          <BellOutlined className="menu_icon " />
+          {/* <BellOutlined className="menu_icon " /> */}
+          <Title className="menu_icon" level={5}>Add Product</Title>
           <ShoppingCartOutlined className="menu_icon " />
           <UserOutlined className="menu_icon " />
+          <LoginOutlined   className="menu_icon"/>
         </Header>
         <Layout>
           <Sider className="sider ant-layout-sider">
