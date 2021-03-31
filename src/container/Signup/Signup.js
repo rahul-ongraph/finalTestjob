@@ -80,13 +80,13 @@ function SignUp(props) {
                   olddata.push(registration);
                   localStorage.setItem("registration", JSON.stringify(olddata));
                   console.log("Data saved", olddata);
-                  history.push('/login')
+                  history.push('/')
                 } else {
                   let oldArr = JSON.parse(olddata);
                   oldArr.push(registration);
                   localStorage.setItem("registration", JSON.stringify(oldArr));
                   console.log("OldArr else => ",oldArr );
-                  history.push('/login')
+                  history.push('/')
                 }
 
               }

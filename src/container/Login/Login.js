@@ -34,14 +34,16 @@ function Login(props) {
       !/((?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]){6,12})/.test(state.password)
     ) {
       error.password = "Invalid password";
-    }else{
-      return true
     }
+    // else{
+    //   return true
+    // }
     setError(error);
   };
   
   const onSubmit = () => {
-    // if (validation()) {
+   if (email != '') {
+     if(password != ''){
       console.log("checked => ", state.checked);
       localStorage.setItem("Remember", state.checked === true ? "1" : "0");
       localStorage.setItem(
@@ -50,7 +52,14 @@ function Login(props) {
       );
       console.log("ppppppppppppp", state.email, state.password);
       history.push("/Product");
-    // }
+    }
+    else {
+      alert('please input password')
+    }
+  }
+    else {
+      alert('please input email')
+    }
   };
   useEffect(() => {
     let remember = Boolean(+localStorage.getItem("Remember"));
