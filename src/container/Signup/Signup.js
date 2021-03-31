@@ -122,7 +122,7 @@ function SignUp(props) {
           <ButtonComponent
             className="default_btn"
             Button="Login"
-            onClick={() => history.push("/login")}
+            onClick={() => history.push("/")}
           />
         </div>
         <div style={{ marginTop: 30 }}></div>

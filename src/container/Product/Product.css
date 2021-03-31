@@ -19,13 +19,45 @@
   font-size: 20px;
   margin: 20px 30px;
   width: 60px;
+  cursor: pointer;
+}
+.addproduct {
+  margin:10px;
+  cursor: pointer;
+}
+.ant-btn-primary {
+  color: #fff;
+  background: #1890ff;
+  border-color: #1890ff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12);
+  -webkit-box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
+}
+.button_Circle {
+  background-color: red;
+  margin: 10px auto;
+  margin-left: -35px;
+}
+.ant-modal {
+  top: 20px;
+}
+.modal {
+  display: flex;
+  margin: 10px auto;
+}
+.delete_Icon {
+  font-size: 20px;
+  margin: 10px 30px;
+  width: 60px;
+  cursor: pointer;
+  margin-left: 0em;
 }
 .serachbar {
   /* margin:20px 30px; */
   padding: 10px 50px;
 }
 .input {
-  width:40%;
+  width: 40%;
 }
 .sidebar {
   display: flex;
@@ -44,7 +76,6 @@
 .iconPosition {
   padding: 15px 30px;
 }
-
 .categoryContent {
   width: 20%;
   background-color: white;
@@ -67,23 +98,9 @@
   flex-wrap: wrap;
   border-width: 2px;
 }
-
-/* .card1 {
-  background-color: red;
-  width:30%;
-  height: 350px;
-  margin:10px;
-  border-radius: 15px;
-} */
 .carsoulproduct {
   height: 160px;
   line-height: 180px;
   text-align: center;
   width: 100%;
 }
-
-/* style={{height:300,width:200,borderWidth:2,backgroundColor:'green'}} */
-/* .cart1 {
-  background-color: red;
-  
-} */

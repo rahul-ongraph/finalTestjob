@@ -1,8 +1,18 @@
 import React, { useState } from "react";
 import "../Product/Product.css";
 import CategoryBox from "../../component/Checkbox/Checkbox";
-import { Layout, AutoComplete, Input, Carousel, Image, Typography, Button } from "antd";
+import {
+  Layout,
+  AutoComplete,
+  Input,
+  Carousel,
+  Image,
+  Typography,
+  Button,
+  Modal,
+} from "antd";
 import Card from "../../component/Card/Card";
+import { useHistory } from "react-router-dom";
 import {
   HomeFilled,
   GiftFilled,
@@ -12,7 +22,8 @@ import {
   ShoppingCartOutlined,
   BellOutlined,
   UserOutlined,
-  LoginOutlined
+  LoginOutlined,
+  DeleteOutlined
 } from "@ant-design/icons";
 
 const item4 = [
@@ -35,6 +46,7 @@ const item4 = [
     category: "Electronics",
     brand: "Realme",
     rate: 5,
+    id:1
   },
   {
     image: [
@@ -55,6 +67,7 @@ const item4 = [
     category: "Clothes",
     brand: "Highlander",
     rate: 4,
+    id:2
   },
   {
     image: [
@@ -75,6 +88,7 @@ const item4 = [
     category: "Grocery",
     brand: "Fortuner",
     rate: 5,
+    id:3
   },
   {
     image: [
@@ -95,6 +109,7 @@ const item4 = [
     category: "Electronics",
     brand: "Samsung",
     rate: 5,
+    id:4
   },
   {
     image: [
@@ -115,6 +130,7 @@ const item4 = [
     category: "Clothes",
     brand: "Peter England",
     rate: 5,
+    id:5
   },
   {
     image: [
@@ -135,6 +151,7 @@ const item4 = [
     category: "Grocery",
     brand: "Ashirvad",
     rate: 4.5,
+    id:6
   },
   {
     image: [
@@ -155,30 +172,33 @@ const item4 = [
     category: "Clothes",
     brand: "tshirt",
     rate: 3,
+    id:7
   },
 ];
 
 function Product(props) {
   const [search, setSearch] = useState("");
   const [data, setData] = useState(item4);
-  const [category, setCategory] = useState([])
-  const [brand, setBrand] = useState([])
-  const [price, setPrice] = useState([])
+  const [category, setCategory] = useState([]);
+  const [brand, setBrand] = useState([]);
+  const [price, setPrice] = useState([]);
+  const [cart, setCart] = useState([]);
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const { Header, Sider, Content } = Layout;
   const { Title } = Typography;
+  const history = useHistory();
   const itemCategory = [
     {
-      "item": "Grocery",
+      item: "Grocery",
     },
     {
-      "item": "Clothes",
+      item: "Clothes",
     },
     {
-
-      "item": "Electronics",
+      item: "Electronics",
     },
   ];
-
+ // brandCategory.1 = null
   const brandCategory = [
     {
       item: "Samsung",
@@ -198,82 +218,121 @@ function Product(props) {
   ];
   const priceCategory = [
     {
-
       item: "0 to 999",
     },
     {
-
       item: "1000 to 9999",
     },
     {
-
       item: "9999 to 29999",
     },
   ];
-
+  
   const searchFilter = (event) => {
     if (event.target.value == "") {
-      setData(item4)
+      setData(item4);
     } else {
-      const temp = item4.filter((value) => (value.productName.toLowerCase().includes(event.target.value.toLowerCase())))
-      setData(temp)
+      const temp = item4.filter((value) =>
+        value.productName
+          .toLowerCase()
+          .includes(event.target.value.toLowerCase())
+      );
+      setData(temp);
     }
     setSearch(event.target.value);
   };
-
   function onChangeCategory(value) {
-    console.log("hhhhhhhhhhhh", value)
+    console.log("hhhhhhhhhhhh", value);
     if (value.length == 0) {
-      setData(item4)
+      setData(item4);
     } else {
-      let temp1 = []
+      let temp1 = [];
       value.map((item1) => {
-        const temp = item4.filter((item) => item.category.toLowerCase() == item1.toLowerCase())
-        console.log("hhhhhhhhhhhh", temp, value)
-        let temp2 = temp1.concat(temp)
-        temp1 = temp2
-      })
-      setData(temp1)
+        const temp = item4.filter(
+          (item) => item.category.toLowerCase() == item1.toLowerCase()
+        );
+        console.log("hhhhhhhhhhhh", temp, value);
+        let temp2 = temp1.concat(temp);
+        temp1 = temp2;
+      });
+      setData(temp1);
     }
-    setCategory(value)
+    setCategory(value);
   }
-
   function onChangeBrand(value) {
-    console.log("hhhhhhhhhhhh", value)
+    console.log("hhhhhhhhhhhh", value);
     if (value.length == 0) {
-      setData(item4)
+      setData(item4);
     } else {
-      let temp1 = []
+      let temp1 = [];
       value.map((item1) => {
-        const temp = item4.filter((item) => item.brand.toLowerCase() == item1.toLowerCase())
-        console.log("hhhhhhhhhhhh", temp, value)
-        let temp2 = temp1.concat(temp)
-        temp1 = temp2
-      })
-      setData(temp1)
+        const temp = item4.filter(
+          (item) => item.brand.toLowerCase() == item1.toLowerCase()
+        );
+        console.log("hhhhhhhhhhhh", temp, value);
+        let temp2 = temp1.concat(temp);
+        temp1 = temp2;
+      });
+      setData(temp1);
     }
-    setBrand(value)
+    setBrand(value);
   }
-
   function onChangePrice(value) {
     if (value.length == 0) {
-      setData(item4)
+      setData(item4);
     } else {
-      let temp1 = []
+      let temp1 = [];
       value.map((item1) => {
-        const x = item1.split(" ")
-        const min = x[0]
-        const max = x[2]
-        const temp = item4.filter((item) => item.price <= max && item.price > min)
-        console.log("aaaaaaa", temp)
-        let temp2 = temp1.concat(temp)
-        temp1 = temp2
-      })
-      setData(temp1)
+        const x = item1.split(" ");
+        const min = x[0];
+        const max = x[2];
+        const temp = item4.filter(
+          (item) => item.price <= max && item.price > min
+        );
+        console.log("aaaaaaa", temp);
+        let temp2 = temp1.concat(temp);
+        temp1 = temp2;
+      });
+      setData(temp1);
     }
-    setPrice(value)
+    setPrice(value);
   }
 
+  const Logout = () => {
+    history.push("/");
+  };
+  const addCart = (id) => {
+  
+    // setCart([...cart,{...item4[0]}])
+    // console.log("aaaaa",cart)
+    // let cart  = [...item4]
+    // for (let i of item4) {
+    //   cart.push(i)
+    // }
+    setCart(cart + 1 )
+  }
+  const delToCart = () => {
+    // setCart(cart.filter((item) => item.id !== idx))
+    // console.log("cart",cart )
+
+
+  // const cart = [...item4]
+  // const updateList = cart.filter(item => item.id !==id);
+  // console.log("bbbbbbbbb",updateList)
+  // setCart(updateList) 
+     
+      setCart(cart - 1);
+  };
+
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+  const handleOk = () => {
+    setIsModalVisible(false);
+  };
+ const handleCancel = () => {
+    setIsModalVisible(false);
+  };
   return (
     <>
       <div className="main">
@@ -289,11 +348,31 @@ function Product(props) {
               onChange={(event) => searchFilter(event)}
             />
           </Input.Group>
-          {/* <BellOutlined className="menu_icon " /> */}
-          <Title className="menu_icon" level={5}>Add Product</Title>
-          <ShoppingCartOutlined className="menu_icon " />
+          <Title className="addproduct" onClick={()=> history.push('Home')}   level={5}>
+            Add Product
+          </Title>
+          <Modal
+            title="Basic Modal"
+            visible={isModalVisible}
+            onOk={handleOk}
+            onCancel={handleCancel}
+          >
+            <div className="modal">
+        <Title level={3}>{cart}</Title>
+            <DeleteOutlined onClick={()=>delToCart()} className="delete_Icon"   />
+            </div>
+          </Modal>
+          <ShoppingCartOutlined onClick={showModal} className="menu_icon " />
+          <Button
+            className="button_Circle"
+            size="small"
+            type="primary"
+            shape="circle"
+          >
+         {cart}
+          </Button>
           <UserOutlined className="menu_icon " />
-          <LoginOutlined   className="menu_icon"/>
+          <LoginOutlined onClick={() => Logout()} className="menu_icon" />
         </Header>
         <Layout>
           <Sider className="sider ant-layout-sider">
@@ -306,21 +385,15 @@ function Product(props) {
               <Title className="category" style={{ color: "green" }} level={5}>
                 Category
               </Title>
-              <CategoryBox
-                onChange={onChangeCategory}
-                item1={itemCategory} />
+              <CategoryBox onChange={onChangeCategory} item1={itemCategory} />
               <Title className="category" style={{ color: "green" }} level={5}>
                 Brand
               </Title>
-              <CategoryBox
-                onChange={onChangeBrand}
-                item1={brandCategory} />
+              <CategoryBox onChange={onChangeBrand} item1={brandCategory} />
               <Title className="category" style={{ color: "green" }} level={5}>
                 Price
               </Title>
-              <CategoryBox
-                onChange={onChangePrice}
-                item1={priceCategory} />
+              <CategoryBox onChange={onChangePrice} item1={priceCategory} />
             </div>
             <div className="productContent">
               <Carousel autoplay>
@@ -354,7 +427,7 @@ function Product(props) {
                 </div>
               </Carousel>
               <Content className="ContentCard">
-                <Card item1={data} />
+                <Card onClick={(id) => addCart(id)} item1={data} />
               </Content>
             </div>
           </Content>

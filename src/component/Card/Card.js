@@ -4,13 +4,13 @@ import { Carousel, Image, Title, Button, Rate } from "antd";
 import { ShoppingCartOutlined } from "@ant-design/icons";
 import { wrap } from "module";
 
-const Card = ({ item1 }) => {
+const Card = ({ item1,onClick }) => {
   return (<>
-      {item1.map((y) => {
+      {item1.map((y,id) => {
         return (
           <div style={{borderWidth:2,borderColor:"black"}} className="card">
             <Carousel autoplay>
-              {y.image.map((x) => {
+              {y.image.map((x,id) => {
                 return (
                   <div>
                     <Image className="carsoul" src={x.item} width="100%" />
@@ -18,10 +18,11 @@ const Card = ({ item1 }) => {
                 );
               })}
             </Carousel>
+            <h3 className="productname">{y.id}</h3>
             <h3 className="productname">{y.productName}</h3>
             <h3 className="productname" style={{ color: "blue" }}>
               ${y.price}/price{" "}
-              <Button className="cart_btn">
+              <Button  onClick={onClick} className="cart_btn">
                 <ShoppingCartOutlined />
               </Button>
             </h3>
