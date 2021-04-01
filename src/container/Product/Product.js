@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../Product/Product.css";
 import CategoryBox from "../../component/Checkbox/Checkbox";
 import {
@@ -23,7 +23,7 @@ import {
   BellOutlined,
   UserOutlined,
   LoginOutlined,
-  DeleteOutlined
+  DeleteOutlined,
 } from "@ant-design/icons";
 
 const item4 = [
@@ -46,7 +46,7 @@ const item4 = [
     category: "Electronics",
     brand: "Realme",
     rate: 5,
-    id:1
+    id: 1,
   },
   {
     image: [
@@ -67,7 +67,7 @@ const item4 = [
     category: "Clothes",
     brand: "Highlander",
     rate: 4,
-    id:2
+    id: 2,
   },
   {
     image: [
@@ -88,7 +88,7 @@ const item4 = [
     category: "Grocery",
     brand: "Fortuner",
     rate: 5,
-    id:3
+    id: 3,
   },
   {
     image: [
@@ -109,7 +109,7 @@ const item4 = [
     category: "Electronics",
     brand: "Samsung",
     rate: 5,
-    id:4
+    id: 4,
   },
   {
     image: [
@@ -130,7 +130,7 @@ const item4 = [
     category: "Clothes",
     brand: "Peter England",
     rate: 5,
-    id:5
+    id: 5,
   },
   {
     image: [
@@ -151,7 +151,7 @@ const item4 = [
     category: "Grocery",
     brand: "Ashirvad",
     rate: 4.5,
-    id:6
+    id: 6,
   },
   {
     image: [
@@ -172,7 +172,7 @@ const item4 = [
     category: "Clothes",
     brand: "tshirt",
     rate: 3,
-    id:7
+    id: 7,
   },
 ];
 
@@ -182,7 +182,7 @@ function Product(props) {
   const [category, setCategory] = useState([]);
   const [brand, setBrand] = useState([]);
   const [price, setPrice] = useState([]);
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState(0);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const { Header, Sider, Content } = Layout;
   const { Title } = Typography;
@@ -198,7 +198,7 @@ function Product(props) {
       item: "Electronics",
     },
   ];
- // brandCategory.1 = null
+  // brandCategory.1 = null
   const brandCategory = [
     {
       item: "Samsung",
@@ -227,7 +227,7 @@ function Product(props) {
       item: "9999 to 29999",
     },
   ];
-  
+
   const searchFilter = (event) => {
     if (event.target.value == "") {
       setData(item4);
@@ -242,7 +242,6 @@ function Product(props) {
     setSearch(event.target.value);
   };
   function onChangeCategory(value) {
-    console.log("hhhhhhhhhhhh", value);
     if (value.length == 0) {
       setData(item4);
     } else {
@@ -251,7 +250,6 @@ function Product(props) {
         const temp = item4.filter(
           (item) => item.category.toLowerCase() == item1.toLowerCase()
         );
-        console.log("hhhhhhhhhhhh", temp, value);
         let temp2 = temp1.concat(temp);
         temp1 = temp2;
       });
@@ -260,7 +258,6 @@ function Product(props) {
     setCategory(value);
   }
   function onChangeBrand(value) {
-    console.log("hhhhhhhhhhhh", value);
     if (value.length == 0) {
       setData(item4);
     } else {
@@ -269,7 +266,6 @@ function Product(props) {
         const temp = item4.filter(
           (item) => item.brand.toLowerCase() == item1.toLowerCase()
         );
-        console.log("hhhhhhhhhhhh", temp, value);
         let temp2 = temp1.concat(temp);
         temp1 = temp2;
       });
@@ -289,7 +285,6 @@ function Product(props) {
         const temp = item4.filter(
           (item) => item.price <= max && item.price > min
         );
-        console.log("aaaaaaa", temp);
         let temp2 = temp1.concat(temp);
         temp1 = temp2;
       });
@@ -297,31 +292,32 @@ function Product(props) {
     }
     setPrice(value);
   }
-
   const Logout = () => {
+    localStorage.clear();
     history.push("/");
   };
-  const addCart = (id) => {
+
+  const addCart = () => {
+//  let cartItems =[]
+//  let newItems = {productName:item4.productName}
+//  cartItems = [...cartItems,newItems]
+//  localStorage.setItem("cart",JSON.stringify(cartItems))
+//  setCart(cartItems)
+//  console.log("cart",cartItems)
+    setCart(cart + 1);
+  };
   
-    // setCart([...cart,{...item4[0]}])
-    // console.log("aaaaa",cart)
-    // let cart  = [...item4]
-    // for (let i of item4) {
-    //   cart.push(i)
-    // }
-    setCart(cart + 1 )
-  }
   const delToCart = () => {
     // setCart(cart.filter((item) => item.id !== idx))
     // console.log("cart",cart )
 
-
-  // const cart = [...item4]
-  // const updateList = cart.filter(item => item.id !==id);
-  // console.log("bbbbbbbbb",updateList)
-  // setCart(updateList) 
-     
-      setCart(cart - 1);
+    // const cart = [...item4]
+    // const updateList = cart.filter(item => item.id !==id);
+    // console.log("bbbbbbbbb",updateList)
+    // setCart(updateList)
+    if(cart !== 0){
+    setCart(cart - 1);
+    }
   };
 
   const showModal = () => {
@@ -330,7 +326,7 @@ function Product(props) {
   const handleOk = () => {
     setIsModalVisible(false);
   };
- const handleCancel = () => {
+  const handleCancel = () => {
     setIsModalVisible(false);
   };
   return (
@@ -348,18 +344,24 @@ function Product(props) {
               onChange={(event) => searchFilter(event)}
             />
           </Input.Group>
-          <Title className="addproduct" onClick={()=> history.push('Home')}   level={5}>
+          <Title
+            className="addproduct"
+            onClick={() => history.push("Home")}
+            level={5}
+          >
             Add Product
           </Title>
           <Modal
-            title="Basic Modal"
             visible={isModalVisible}
             onOk={handleOk}
             onCancel={handleCancel}
           >
             <div className="modal">
-        <Title level={3}>{cart}</Title>
-            <DeleteOutlined onClick={()=>delToCart()} className="delete_Icon"   />
+              <Title level={3}>{cart}</Title>
+              <DeleteOutlined
+                onClick={() => delToCart()}
+                className="delete_Icon"
+              />
             </div>
           </Modal>
           <ShoppingCartOutlined onClick={showModal} className="menu_icon " />
@@ -427,7 +429,7 @@ function Product(props) {
                 </div>
               </Carousel>
               <Content className="ContentCard">
-                <Card onClick={(id) => addCart(id)} item1={data} />
+                <Card onClick={() => addCart()} item1={data} />
               </Content>
             </div>
           </Content>

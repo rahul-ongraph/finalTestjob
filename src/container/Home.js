@@ -3,48 +3,193 @@ import "./../container/Home.css";
 import InputField from "./../component/Input/InputField";
 import ButtonComponent from "./../component/Button/Button"
 import { Typography, Form } from "antd";
+import { stat } from "fs";
+const item4 = [
+  {
+    image: [
+      {
+        item: "/assets/realmec11.jpeg",
+      },
+      {
+        item: "/assets/realme1.jpeg",
+      },
+      {
+        item: "/assets/realme2.jpeg",
+      },
+    ],
+    price: 14999,
+    productName: "Rich Green Blue(Rich Green,64 Gb)",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    category: "Electronics",
+    brand: "Realme",
+    rate: 5,
+    id: 1,
+  },
+  {
+    image: [
+      {
+        item: "/assets/jeans.jpeg",
+      },
+      {
+        item: "/assets/jeans1.jpeg",
+      },
+      {
+        item: "/assets/jeans3.jpeg",
+      },
+    ],
+    price: 1999,
+    productName: "Jeans(Highlander)",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    category: "Clothes",
+    brand: "Highlander",
+    rate: 4,
+    id: 2,
+  },
+  {
+    image: [
+      {
+        item: "/assets/oil.jpeg",
+      },
+      {
+        item: "/assets/oil1.jpeg",
+      },
+      {
+        item: "/assets/oil2.jpeg",
+      },
+    ],
+    price: 750,
+    productName: "Fortuner oil",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    category: "Grocery",
+    brand: "Fortuner",
+    rate: 5,
+    id: 3,
+  },
+  {
+    image: [
+      {
+        item: "/assets/samsung1.jpeg",
+      },
+      {
+        item: "/assets/samsung2.jpeg",
+      },
+      {
+        item: "/assets/samsung3.jpeg",
+      },
+    ],
+    price: 24999,
+    productName: "Samsung Refrigator(415 L)",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    category: "Electronics",
+    brand: "Samsung",
+    rate: 5,
+    id: 4,
+  },
+  {
+    image: [
+      {
+        item: "/assets/shirt.jpeg",
+      },
+      {
+        item: "/assets/shirt1.jpeg",
+      },
+      {
+        item: "/assets/shirt2.jpeg",
+      },
+    ],
+    price: 1499,
+    productName: "Shirt(Peter England)",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    category: "Clothes",
+    brand: "Peter England",
+    rate: 5,
+    id: 5,
+  },
+  {
+    image: [
+      {
+        item: "/assets/atta1.jpeg",
+      },
+      {
+        item: "/assets/atta2.jpeg",
+      },
+      {
+        item: "/assets/atta3.jpeg",
+      },
+    ],
+    price: 499,
+    productName: "Ashirvad Atta",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    category: "Grocery",
+    brand: "Ashirvad",
+    rate: 4.5,
+    id: 6,
+  },
+  {
+    image: [
+      {
+        item: "/assets/tshirt2.jpeg",
+      },
+      {
+        item: "/assets/tshirt3.jpeg",
+      },
+      {
+        item: "/assets/tshirt1.jpeg",
+      },
+    ],
+    price: 999,
+    productName: "tShirt",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    category: "Clothes",
+    brand: "tshirt",
+    rate: 3,
+    id: 7,
+  },
+];
 function Home() {
   const { Title } = Typography;
   const [state, setState] = useState({
     id: "",
     description: "",
-    pquantity: "",
+    pQuantity: "",
     price: "", 
   });
-  const [error, setError] = useState({
-    id: "",
-    description: "",
-    pquantity: "",
-    price: "", 
-  });
+  // const [error, setError] = useState({
+  //   id: "",
+  //   description: "",
+  //   pquantity: "",
+  //   price: "", 
+  // });
   const onChangeValue = (e, text) => {
     setState({ ...state, [text]: e.target.value });
   };
    const onSubmit = () => {
-		 if(id !== '' ){
-			 if(description !== ''){
-			 }
-			 else {
-				 alert("please input description")
-			 }
-			}
-			 else {
-				alert("please input id")
-			}
-	// 	let addProduct = {
-	// 		id:id,
-	// 		description:description,	
-	// 		pquantity:pquantity,
-	// 		price:price,
-	// 	};
-	// 	let addItem;
-	// 	addItem.push(addProduct);
-	// 	localStorage.setItem("addProduct", JSON.stringify(addItem));
-	// 	console.log("OldArr else => ",addItem );
-	// 	// history.push('/')
+     let addItem = {
+      id:id,
+      description: description,
+      pQuantity:pQuantity,
+      price:price, 
+     }
+    if (item4 == null){
+    let data = [];
+    data = localStorage.setItem("addItem",addItem)
+    console.log("aaaaaaaa",data)
+    // data.push(state)
+    console.log("aaaaaaaa",data)
+    }
+    // else {
+    //   console.log("ppppppppppp",addItem)
+    // }
 	 }
 
-     const {id,description,pquantity,price} = state       
+     const {id,description,pQuantity,price} = state       
   return (
     <div className="main">
         <div className="productadd">
@@ -54,25 +199,25 @@ function Home() {
           type="number"
           placeholder="Please Enter your Product Id"
           label="Product Id"
-          onChange={(e) => onChangeValue(e, "Product Id")}
+          onChange={(e) => onChangeValue(e, "id")}
         />
          <InputField
           type="text"
           placeholder="Please Enter your Product Description"
           label="Product Desc"
-          onChange={(e) => onChangeValue(e, "Product Desc")}
+          onChange={(e) => onChangeValue(e, "description")}
         />
         <InputField
           type="number"
           placeholder="Please Enter your Quantity"
           label="Product Quantity"
-          onChange={(e) => onChangeValue(e, "Product Quantity")}
+          onChange={(e) => onChangeValue(e, "pQuantity")}
         />
          <InputField
           type="number"
           placeholder="Please Enter your Product price"
           label="Product price"
-          onChange={(e) => onChangeValue(e, "Product Price")}
+          onChange={(e) => onChangeValue(e, "price")}
         />
          <ButtonComponent
          onClick={() => onSubmit()}
