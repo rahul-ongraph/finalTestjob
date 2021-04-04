@@ -178,11 +178,11 @@ const item4 = [
 
 function Product(props) {
   const [search, setSearch] = useState("");
-  const [data, setData] = useState(item4);
+  const [data, setData] = useState(item4)
   const [category, setCategory] = useState([]);
   const [brand, setBrand] = useState([]);
   const [price, setPrice] = useState([]);
-  const [cart, setCart] = useState(0);
+  const [cart, setCart] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const { Header, Sider, Content } = Layout;
   const { Title } = Typography;
@@ -227,7 +227,12 @@ function Product(props) {
       item: "9999 to 29999",
     },
   ];
-
+  let temp = localStorage.getItem("addItem")
+  let temp1 = JSON.parse(temp)
+  useEffect(() => {
+    data.push(temp1)
+    console.log("aaaaaaaa", data)
+  }, [temp1])
   const searchFilter = (event) => {
     if (event.target.value == "") {
       setData(item4);
@@ -293,31 +298,31 @@ function Product(props) {
     setPrice(value);
   }
   const Logout = () => {
-    localStorage.clear();
+    localStorage.setItem('loggedInUser',null);
     history.push("/");
   };
 
-  const addCart = () => {
-//  let cartItems =[]
-//  let newItems = {productName:item4.productName}
-//  cartItems = [...cartItems,newItems]
-//  localStorage.setItem("cart",JSON.stringify(cartItems))
-//  setCart(cartItems)
-//  console.log("cart",cartItems)
-    setCart(cart + 1);
+  const addCart = (item) => {
+    let temp = localStorage.getItem("cart")
+    let cartItems = JSON.parse(temp)
+    let newItems = [item]
+    let temp2 = newItems.concat(cartItems.filter((item) => newItems.indexOf(item) < 0))
+    cartItems = temp2
+    localStorage.setItem("cart", JSON.stringify(cartItems))
+    setCart(cartItems)
+    //setCart(cart + 1);
   };
-  
-  const delToCart = () => {
-    // setCart(cart.filter((item) => item.id !== idx))
-    // console.log("cart",cart )
 
-    // const cart = [...item4]
-    // const updateList = cart.filter(item => item.id !==id);
-    // console.log("bbbbbbbbb",updateList)
-    // setCart(updateList)
-    if(cart !== 0){
-    setCart(cart - 1);
-    }
+
+  const delToCart = (index) => {
+    let temp = localStorage.getItem("cart")
+    let cartItems = JSON.parse(temp)
+    cartItems.splice(index, 1)
+    localStorage.setItem("cart", JSON.stringify(cartItems))
+    setCart(cartItems)
+    // if (cart !== 0) {
+    //   setCart(cart - 1);
+    // }
   };
 
   const showModal = () => {
@@ -329,6 +334,7 @@ function Product(props) {
   const handleCancel = () => {
     setIsModalVisible(false);
   };
+
   return (
     <>
       <div className="main">
@@ -357,11 +363,21 @@ function Product(props) {
             onCancel={handleCancel}
           >
             <div className="modal">
-              <Title level={3}>{cart}</Title>
-              <DeleteOutlined
-                onClick={() => delToCart()}
-                className="delete_Icon"
-              />
+              <Title level={3}>  {
+                cart.map((item, index) => {
+                  return (<div>
+                    <p>{item.price}</p>
+                    <DeleteOutlined
+                      onClick={() => delToCart(index)}
+                      className="delete_Icon"
+                    />
+                  </div>)
+                })
+
+              }
+
+              </Title>
+
             </div>
           </Modal>
           <ShoppingCartOutlined onClick={showModal} className="menu_icon " />
@@ -371,7 +387,7 @@ function Product(props) {
             type="primary"
             shape="circle"
           >
-         {cart}
+
           </Button>
           <UserOutlined className="menu_icon " />
           <LoginOutlined onClick={() => Logout()} className="menu_icon" />
@@ -429,7 +445,7 @@ function Product(props) {
                 </div>
               </Carousel>
               <Content className="ContentCard">
-                <Card onClick={() => addCart()} item1={data} />
+                <Card onClick={(item) => addCart(item)} item1={data} />
               </Content>
             </div>
           </Content>

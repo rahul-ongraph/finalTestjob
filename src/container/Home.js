@@ -3,6 +3,7 @@ import "./../container/Home.css";
 import InputField from "./../component/Input/InputField";
 import ButtonComponent from "./../component/Button/Button"
 import { Typography, Form } from "antd";
+import { useHistory } from "react-router-dom";
 import { stat } from "fs";
 const item4 = [
   {
@@ -155,6 +156,7 @@ const item4 = [
 ];
 function Home() {
   const { Title } = Typography;
+  const history = useHistory();
   const [state, setState] = useState({
     id: "",
     description: "",
@@ -177,17 +179,32 @@ function Home() {
       pQuantity:pQuantity,
       price:price, 
      }
-    if (item4 == null){
+  if (id != '') {
+    if(description != '')  {
+      if(pQuantity != '') {
+        if(price != ''){
     let data = [];
-    data = localStorage.setItem("addItem",addItem)
+    data = localStorage.setItem("addItem",JSON.stringify(addItem))
     console.log("aaaaaaaa",data)
-    // data.push(state)
-    console.log("aaaaaaaa",data)
-    }
-    // else {
-    //   console.log("ppppppppppp",addItem)
-    // }
-	 }
+    history.push("/Product");
+  }
+  else {
+    alert('please fill price')
+  }
+}
+  else {
+    alert('please fill  Product Quantity')
+  }
+}
+else {
+  alert('please fill  Description')
+}
+} 
+else {
+  alert('please fill  Id')
+}
+
+}
 
      const {id,description,pQuantity,price} = state       
   return (

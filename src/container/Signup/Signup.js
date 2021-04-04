@@ -76,10 +76,10 @@ function SignUp(props) {
                 };
                 let olddata = localStorage.getItem("registration");
                 if (olddata == null) {
-                  olddata = [];
-                  olddata.push(registration);
-                  localStorage.setItem("registration", JSON.stringify(olddata));
-                  console.log("Data saved", olddata);
+                let oldArr = [];
+                oldArr.push(registration);
+                  localStorage.setItem("registration", JSON.stringify(oldArr));
+                  console.log("Data saved", oldArr);
                   history.push('/')
                 } else {
                   let oldArr = JSON.parse(olddata);

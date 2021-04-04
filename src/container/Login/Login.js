@@ -40,23 +40,51 @@ function Login(props) {
     // }
     setError(error);
   };
-  
-  const onSubmit = () => {
-   if (email != '') {
-     if(password != ''){
-      console.log("checked => ", state.checked);
-      localStorage.setItem("Remember", state.checked === true ? "1" : "0");
-      localStorage.setItem(
-        "loggedInUser",
-        JSON.stringify({ email: state.email, password: state.password })
-      );
-      console.log("ppppppppppppp", state.email, state.password);
-      history.push("/Product");
-    }
-    else {
-      alert('please input password')
+  const isRegistered = (data) => {
+    let signedUpData = localStorage.getItem("registration")
+    if (signedUpData == null) {
+      return false
+    } else {
+      let userArr = JSON.parse(signedUpData);
+      userArr.forEach(el => {
+        if (el.email === data.email) {
+          return data.password === el.password
+        } else {
+          return false
+        }
+      });
     }
   }
+
+  const onSubmit = () => {
+    let data = { email: state.email, password: state.password };
+    if (email != '') {
+      if (password != '') {
+        console.log("checked => ", state.checked);
+        localStorage.setItem("Remember", state.checked === true ? "1" : "0");
+        let signedUpData = localStorage.getItem("registration")
+        let userArr = JSON.parse(signedUpData);
+        if (signedUpData == null) {
+          alert('User not found')
+        } else {
+        userArr.forEach(el => {
+          if (el.email === data.email) {
+            if (data.password === el.password) {
+              localStorage.setItem(
+                "loggedInUser",
+                JSON.stringify(data)
+              );
+              history.push("/Product");
+            }
+          } else {
+            alert('Email or password is not correct')
+          }
+        });
+      }}
+      else {
+        alert('please input password')
+      }
+    }
     else {
       alert('please input email')
     }
@@ -66,12 +94,12 @@ function Login(props) {
     console.log("remember => ", remember);
     if (remember) {
       let loggedInUser = localStorage.getItem("loggedInUser");
-      if (loggedInUser !== null || loggedInUser !== undefined) {
+      if (loggedInUser != null || loggedInUser != undefined) {
         let user = JSON.parse(loggedInUser);
         setState({
           ...state,
-          email: user.email,
-          password: user.password,
+          email: user?.email,
+          password: user?.password,
           checked: remember,
         });
       }

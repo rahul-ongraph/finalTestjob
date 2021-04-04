@@ -33,10 +33,10 @@ const Card = ({ item1, onClick }) => {
             className="card"
           >
             <Carousel autoplay>
-              {y.image.map((x, id) => {
+              {y.image && y.image.map((x, id) => {
                 return (
                   <div>
-                    <Image className="carsoul" src={x.item} width="100%" />
+                    <Image className="carsoul" src={x.item} alt={("/assets/tshirt2.jpeg")} width="100%" />
                   </div>
                 );
               })}
@@ -52,10 +52,10 @@ const Card = ({ item1, onClick }) => {
                   style={{ textAlign: "center" }}
                   title="Product Information"
                 >
-                  <div style={{flexDirection:"column"}}>
-                  <h5  className="description">{y.description}</h5>
-                  <h3  className="productname" style={{ color: "blue" }}>
-                    ${y.price}/price
+                  <div style={{ flexDirection: "column" }}>
+                    <h5 className="description">{y.description}</h5>
+                    <h3 className="productname" style={{ color: "blue" }}>
+                      ${y.price}/price
                   </h3>
                   </div>
                 </Descriptions>
@@ -66,7 +66,7 @@ const Card = ({ item1, onClick }) => {
             </h3>
             <h3 className="productname" style={{ color: "blue" }}>
               ${y.price}/price{" "}
-              <Button onClick={onClick} className="cart_btn">
+              <Button onClick={() => onClick(y)} className="cart_btn">
                 <ShoppingCartOutlined />
               </Button>
             </h3>
