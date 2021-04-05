@@ -178,7 +178,7 @@ const item4 = [
 
 function Product(props) {
   const [search, setSearch] = useState("");
-  const [data, setData] = useState(item4)
+  const [data, setData] = useState(item4);
   const [category, setCategory] = useState([]);
   const [brand, setBrand] = useState([]);
   const [price, setPrice] = useState([]);
@@ -227,12 +227,13 @@ function Product(props) {
       item: "9999 to 29999",
     },
   ];
-  let temp = localStorage.getItem("addItem")
-  let temp1 = JSON.parse(temp)
+  let temp = localStorage.getItem("addItem");
+  let temp1 = JSON.parse(temp);
   useEffect(() => {
-    data.push(temp1)
-    console.log("aaaaaaaa", data)
-  }, [temp1])
+    data.push(temp1);
+    console.log("aaaaaaaa", data);
+  }, [temp1]);
+
   const searchFilter = (event) => {
     if (event.target.value == "") {
       setData(item4);
@@ -298,28 +299,29 @@ function Product(props) {
     setPrice(value);
   }
   const Logout = () => {
-    localStorage.setItem('loggedInUser',null);
+    localStorage.setItem("loggedInUser", null);
     history.push("/");
   };
 
   const addCart = (item) => {
-    let temp = localStorage.getItem("cart")
-    let cartItems = JSON.parse(temp)
-    let newItems = [item]
-    let temp2 = newItems.concat(cartItems.filter((item) => newItems.indexOf(item) < 0))
-    cartItems = temp2
-    localStorage.setItem("cart", JSON.stringify(cartItems))
-    setCart(cartItems)
+    let temp = localStorage.getItem("cart");
+    let cartItems = JSON.parse(temp);
+    let newItems = [item];
+    let temp2 = newItems.concat(
+      cartItems.filter((item) => newItems.indexOf(item) < 0)
+    );
+    cartItems = temp2;
+    localStorage.setItem("cart", JSON.stringify(cartItems));
+    setCart(cartItems);
     //setCart(cart + 1);
   };
 
-
   const delToCart = (index) => {
-    let temp = localStorage.getItem("cart")
-    let cartItems = JSON.parse(temp)
-    cartItems.splice(index, 1)
-    localStorage.setItem("cart", JSON.stringify(cartItems))
-    setCart(cartItems)
+    let temp = localStorage.getItem("cart");
+    let cartItems = JSON.parse(temp);
+    cartItems.splice(index, 1);
+    localStorage.setItem("cart", JSON.stringify(cartItems));
+    setCart(cartItems);
     // if (cart !== 0) {
     //   setCart(cart - 1);
     // }
@@ -363,21 +365,28 @@ function Product(props) {
             onCancel={handleCancel}
           >
             <div className="modal">
-              <Title level={3}>  {
-                cart.map((item, index) => {
-                  return (<div>
-                    <p>{item.price}</p>
-                    <DeleteOutlined
-                      onClick={() => delToCart(index)}
-                      className="delete_Icon"
-                    />
-                  </div>)
-                })
-
-              }
-
+              <Title level={3}>
+                {" "}
+                <tr>
+                        <th>Product Name</th>
+                        <th>Product Price</th>
+                      </tr>
+                {cart.map((item, index) => {
+                  return (
+                    <div style={{display:"flex"}}>
+                     
+                  <td>{item.productName}</td>
+                  <td>{item.price}</td>
+                      <DeleteOutlined
+                        onClick={() => delToCart(index)}
+                        class
+                        Name="delete_Icon"
+                      />
+                    </div>
+                  );
+                })}
+               
               </Title>
-
             </div>
           </Modal>
           <ShoppingCartOutlined onClick={showModal} className="menu_icon " />
@@ -386,9 +395,7 @@ function Product(props) {
             size="small"
             type="primary"
             shape="circle"
-          >
-
-          </Button>
+          ></Button>
           <UserOutlined className="menu_icon " />
           <LoginOutlined onClick={() => Logout()} className="menu_icon" />
         </Header>

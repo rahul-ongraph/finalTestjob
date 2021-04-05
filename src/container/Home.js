@@ -174,11 +174,13 @@ function Home() {
   };
    const onSubmit = () => {
      let addItem = {
+      //  image:image,
       id:id,
       description: description,
       pQuantity:pQuantity,
       price:price, 
      }
+    // if(image != ''){
   if (id != '') {
     if(description != '')  {
       if(pQuantity != '') {
@@ -204,14 +206,27 @@ else {
   alert('please fill  Id')
 }
 
+// else {
+//   alert('please fill  image')
+// }
+
+
 }
 
-     const {id,description,pQuantity,price} = state       
+     const {id,description,pQuantity,price,image} = state       
   return (
     <div className="main">
         <div className="productadd">
       <Title level={3}>New Product Added</Title>
       <Form>
+      {/* <InputField
+          id="photo"
+          type="file"
+          name="properties[Uploaded Image]"
+          placeholder="Please Enter your Product Images"
+          label="Product Images"
+          onChange={(e) => onChangeValue(e, "image")}
+        /> */}
         <InputField
           type="number"
           placeholder="Please Enter your Product Id"
